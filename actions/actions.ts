@@ -26,6 +26,8 @@ export async function fetchTitlesByGenres(genres: string) {
 
 export async function fetchNextTitlesPage(cursor?: string) {
   const { result, nextCursor } = await NextTitlesPage(cursor);
+  console.log("result", result);
+  console.log("nextCursor", nextCursor);
   return {
     result,
     nextCursor,

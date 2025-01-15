@@ -1,9 +1,9 @@
 import MView from "@/components/MView";
 import { Navbar } from "@/components/Navbar";
-import { getAllTitles } from "@/db/queries/select";
 import { ItemProvider } from "@/components/ItemContext";
+import { fetchAllTitles } from "@/actions/actions";
 export default async function Home() {
-  const result = await getAllTitles();
+  const result = await fetchAllTitles();
 
   return (
     <ItemProvider initialItems={result}>

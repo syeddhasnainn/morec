@@ -1,14 +1,14 @@
 "use client";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { MoView } from "./MoView";
 import {
+  fetchTvSeries,
+  fetchTitlesByGenres,
   fetchNextTitlesPage,
   fetchPreviousTitlesPage,
-  fetchTitlesByGenres,
-  fetchTvSeries,
 } from "@/actions/actions";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useState } from "react";
 import { useItemContext } from "./ItemContext";
-import { MoView } from "./MoView";
 
 export default function MView({ result }: { result: any }) {
   const genres = [
@@ -47,16 +47,19 @@ export default function MView({ result }: { result: any }) {
     setItems(result);
   };
 
-  const [cursor, setCursor] = useState<string | undefined>(undefined);
+  const [cursor, setCursor] = useState<string | undefined>("10");
+  console.log("cursor", cursor);
 
   const handleNextPage = async (cursor: string | undefined) => {
     const { result, nextCursor } = await fetchNextTitlesPage(cursor);
+    console.log("nextCursor", result);
     setItems(result);
     setCursor(nextCursor);
   };
 
   const handlePreviousPage = async (cursor: string | undefined) => {
     const { result, previousCursor } = await fetchPreviousTitlesPage(cursor);
+    console.log("previousCursor", result);
     setItems(result);
     setCursor(previousCursor);
   };
@@ -107,7 +110,7 @@ export default function MView({ result }: { result: any }) {
             <button
               onClick={() => handleCategoryClick(genre)}
               key={index}
-              className="text-white/50 border border-white/50 rounded-lg text-xl p-4 px-6 whitespace-nowrap hover:bg-white/10 hover:text-white/70 transition-colors cursor-pointer"
+              className="text-white/50 border border-white/50 rounded-lg p-2 px-4 whitespace-nowrap hover:bg-white/10 hover:text-white/70 transition-colors cursor-pointer"
             >
               {genre}
             </button>

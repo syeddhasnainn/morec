@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 import { useViewContext } from "./ViewContext";
 
 export const MoView = ({ result }: { result: any }) => {
@@ -10,21 +11,22 @@ export const MoView = ({ result }: { result: any }) => {
     <div>
       {!isListView ? (
         <section className="image-grid px-4">
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5  gap-4">
             {result.map((row: any, index: any) => (
               <Link href={`/${row.id}`} key={row.id} prefetch={true}>
                 <div
                   key={row.id}
-                  className="rounded-lg overflow-clip group cursor-pointer "
+                  className="rounded-lg overflow-clip group cursor-pointer aspect-[2/3]"
                 >
                   <Image
-                    priority={true}
-                    quality={50}
+                    priority={index < 4}
+                    quality={10}
                     src={row.image}
                     alt={row.title}
-                    width={400}
+                    width={500}
                     height={500}
-                    className="w-full h-auto object-cover hover:scale-105 transition-all duration-500 mb-1"
+                    className="w-full h-full object-cover hover:scale-105 transition-all duration-500"
+                    sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 10vw"
                   />
                 </div>
               </Link>
@@ -43,16 +45,16 @@ export const MoView = ({ result }: { result: any }) => {
                   <div className="w-16 h-24 sm:w-32 sm:h-32 bg-white/20 rounded-lg overflow-hidden flex-shrink-0">
                     <Image
                       priority={true}
-                      quality={50}
+                      quality={10}
                       src={row.image}
                       alt={row.title}
-                      width={80}
-                      height={100}
+                      width={500}
+                      height={500}
                       className="w-full h-auto object-center"
                     />
                   </div>
                   <div className="flex flex-col gap-2">
-                    <div className="text-gray-500 text-lg font-medium">TITLE</div>
+                    <div className="text-gray-500 text-sm">Title</div>
                     <div className="text-base sm:text-lg">{row.title}</div>
                   </div>
                 </div>

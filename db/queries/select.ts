@@ -21,7 +21,7 @@ export const getAllTitles = async () => {
   const result = await db
     .select()
     .from(mntTable)
-    .orderBy(asc(mntTable.id))
+    .where(gt(mntTable.id, "0"))
     .limit(10);
   return result;
 };
@@ -31,7 +31,7 @@ export const getTitlesByGenres = async (genres: string) => {
     .select()
     .from(mntTable)
     .where(like(mntTable.genres, `%${genres}%`))
-    .orderBy(desc(mntTable.id))
+    .orderBy(asc(mntTable.id))
     .limit(10);
   return result;
 };
@@ -58,9 +58,9 @@ export const PreviousTitlesPage = async (cursor?: string, pageSize = 10) => {
     .from(mntTable)
     .where(cursor ? lt(mntTable.id, cursor) : undefined)
     .limit(pageSize)
-    .orderBy(asc(mntTable.id));
+    .orderBy(desc(mntTable.id));
 
-  const previousCursor = result.length > 0 ? result[0].id : undefined;
+  const previousCursor = result.length > 0 ? result[result.length - 1].id : undefined;
   return {
     result,
     previousCursor,

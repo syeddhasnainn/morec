@@ -1,5 +1,5 @@
 "use client";
-import { Menu } from "lucide-react";
+import { Github, Menu, Twitter } from "lucide-react";
 import { useViewContext } from "./ViewContext";
 import { searchTitlesAction } from "@/actions/actions";
 import { useItemContext } from "./ItemContext";
@@ -64,8 +64,9 @@ export const Navbar = () => {
           className="bg-transparent border-none outline-none text-white"
         />
       </div>
-
-      <Menu className="cursor-pointer hover:opacity-80 transition-opacity" />
+      <a href="https://github.com/syeddhasnainn/morec" target="_blank">
+        <Github className="cursor-pointer hover:opacity-80 transition-opacity" />
+      </a>
     </nav>
   );
 };
