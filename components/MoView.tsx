@@ -10,7 +10,7 @@ export const MoView = ({ result }: { result: any }) => {
   return (
     <div>
       {!isListView ? (
-        <section className="image-grid px-4">
+        <section className="image-grid md:px-4">
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5  gap-4">
             {result.map((row: any, index: any) => (
               <Link href={`/${row.id}`} key={row.id} prefetch={true}>
@@ -19,15 +19,17 @@ export const MoView = ({ result }: { result: any }) => {
                   className="rounded-lg overflow-clip group cursor-pointer aspect-[2/3]"
                 >
                   <Image
-                    priority={index < 4}
+                
+                    priority={true}
                     quality={10}
                     src={row.image}
                     alt={row.title}
                     width={500}
                     height={500}
                     className="w-full h-full object-cover hover:scale-105 transition-all duration-500"
-                    sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 10vw"
+                    
                   />
+            
                 </div>
               </Link>
             ))}

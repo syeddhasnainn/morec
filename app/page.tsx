@@ -7,7 +7,7 @@ export default async function Home() {
 
   return (
     <ItemProvider initialItems={result}>
-      <div className="bg-black min-h-screen text-white p-16 sm:px-12">
+      <div className="bg-black min-h-screen text-white md:p-16 sm:px-12">
         <div className="flex flex-col">
           <Navbar />
           <MView result={result} />

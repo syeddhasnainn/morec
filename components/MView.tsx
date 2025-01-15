@@ -69,7 +69,7 @@ export default function MView({ result }: { result: any }) {
     setItems(result);
   };
   return (
-    <div className="mt-32">
+    <div className="mt-40 md:mt-32">
       <section className="mb-16 px-4">
         <div
           className="flex gap-2 pb-2 overflow-x-auto"
@@ -118,11 +118,11 @@ export default function MView({ result }: { result: any }) {
         </div>
       </section>
 
-      <section className="image-list px-4">
+      <section className="image-list px-4 sm:px-0">
         <MoView result={items} />
       </section>
 
-      <section className="flex justify-center mt-12">
+      <section className="flex justify-center my-12 md:mt-12 md:my-0">
         <div className="flex gap-2 backdrop-blur-sm bg-white/10 p-2 border border-white/10 rounded-2xl">
           <button
             onClick={() => handlePreviousPage(cursor)}

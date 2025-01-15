@@ -1,4 +1,4 @@
-import { asc, desc, eq, gt, like, lt } from "drizzle-orm";
+import { asc, desc, eq, gt, like, lt, sql } from "drizzle-orm";
 import { db } from "../db";
 import { mntTable } from "../schema";
 
@@ -27,12 +27,12 @@ export const getAllTitles = async () => {
 };
 
 export const getTitlesByGenres = async (genres: string) => {
-  const result = await db
-    .select()
-    .from(mntTable)
-    .where(like(mntTable.genres, `%${genres}%`))
-    .orderBy(asc(mntTable.id))
-    .limit(10);
+  const result = await db.all(`
+    SELECT * FROM mnt
+    WHERE genres GLOB '${genres}*'
+    ORDER BY id ASC
+    LIMIT 10
+  `);
   return result;
 };
 
@@ -60,7 +60,8 @@ export const PreviousTitlesPage = async (cursor?: string, pageSize = 10) => {
     .limit(pageSize)
     .orderBy(desc(mntTable.id));
 
-  const previousCursor = result.length > 0 ? result[result.length - 1].id : undefined;
+  const previousCursor =
+    result.length > 0 ? result[result.length - 1].id : undefined;
   return {
     result,
     previousCursor,

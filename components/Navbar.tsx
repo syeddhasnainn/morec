@@ -1,5 +1,5 @@
 "use client";
-import { Github, Menu, Twitter } from "lucide-react";
+import { Github, Grid, Grid2X2, LayoutList, Menu, Search, Twitter } from "lucide-react";
 import { useViewContext } from "./ViewContext";
 import { searchTitlesAction } from "@/actions/actions";
 import { useItemContext } from "./ItemContext";
@@ -33,7 +33,7 @@ export const Navbar = () => {
         MOREC
       </div>
       <div
-        className="p-2 flex items-center gap-4
+        className="hidden p-2 md:flex items-center gap-4
         
         "
       >
@@ -57,16 +57,22 @@ export const Navbar = () => {
         </div>
         <p className="text-white">SEARCH |</p>
         <input
-          autoFocus
           onChange={handleSearch}
           placeholder="Enter your query"
           type="text"
           className="bg-transparent border-none outline-none text-white"
         />
       </div>
+      <div className="flex gap-2">
       <a href="https://github.com/syeddhasnainn/morec" target="_blank">
         <Github className="cursor-pointer hover:opacity-80 transition-opacity" />
       </a>
+     
+      <button className="md:hidden" onClick={() => setIsListView(!isListView)}>
+        <LayoutList className="cursor-pointer hover:opacity-80 transition-opacity" />
+      </button>
+      </div>
+   
     </nav>
   );
 };
