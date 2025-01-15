@@ -69,10 +69,13 @@ export const PreviousTitlesPage = async (cursor?: string, pageSize = 10) => {
 };
 
 export const searchTitles = async (query: string) => {
-  const result = await db
-    .select()
-    .from(mntTable)
-    .where(like(mntTable.title, `%${query}%`))
-    .limit(10);
+  const result = await db.all(
+    `
+      SELECT * FROM mnt
+      WHERE title GLOB '${query}*'
+      ORDER BY id ASC
+      LIMIT 10
+    `
+  );
   return result;
 };

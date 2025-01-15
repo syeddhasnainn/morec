@@ -1,10 +1,10 @@
 "use client";
-import { Github, Grid, Grid2X2, LayoutList, Menu, Search, Twitter } from "lucide-react";
-import { useViewContext } from "./ViewContext";
 import { searchTitlesAction } from "@/actions/actions";
-import { useItemContext } from "./ItemContext";
+import { Github, LayoutList, Search } from "lucide-react";
+import { useEffect, useState } from "react";
 import { useDebounce } from "use-debounce";
-import { useState, useEffect } from "react";
+import { useItemContext } from "./ItemContext";
+import { useViewContext } from "./ViewContext";
 
 export const Navbar = () => {
   const [text, setText] = useState("");
@@ -32,6 +32,7 @@ export const Navbar = () => {
       <div className="logo text-2xl font-bold tracking-tighter text-white">
         MOREC
       </div>
+
       <div
         className="hidden p-2 md:flex items-center gap-4
         
@@ -64,15 +65,22 @@ export const Navbar = () => {
         />
       </div>
       <div className="flex gap-2">
-      <a href="https://github.com/syeddhasnainn/morec" target="_blank">
-        <Github className="cursor-pointer hover:opacity-80 transition-opacity" />
-      </a>
-     
-      <button className="md:hidden" onClick={() => setIsListView(!isListView)}>
-        <LayoutList className="cursor-pointer hover:opacity-80 transition-opacity" />
-      </button>
+        <a href="https://github.com/syeddhasnainn/morec" target="_blank">
+          <Github className="hidden md:block cursor-pointer hover:opacity-80 transition-opacity" />
+        </a>
+        <input
+          onChange={handleSearch}
+          type="text"
+          className="md:hidden bg-transparent place-content-end w-32 outline-none placeholder-white/25"
+          placeholder="Enter your query"
+        />
+        <button
+          className="md:hidden"
+          onClick={() => setIsListView(!isListView)}
+        >
+          <LayoutList className="cursor-pointer hover:opacity-80 transition-opacity" />
+        </button>
       </div>
-   
     </nav>
   );
 };
