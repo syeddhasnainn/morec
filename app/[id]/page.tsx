@@ -2,9 +2,10 @@ import { getTitleById } from "@/db/queries/select";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+import {use} from "react"
 
-export default async function Page({ params }: { params: { id: string } }) {
-  const id = params.id;
+export default async function Page({ params }: { params: Promise<{ id: string }> }) {
+  const {id} = use(params)
   const movie = await getTitleById(id);
   const movieData = movie[0];
 
