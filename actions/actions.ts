@@ -5,10 +5,17 @@ import {
   getTitlesByGenres,
   NextTitlesPage,
   PreviousTitlesPage,
+  searchTitles,
+  getAllTitles,
 } from "@/db/queries/select";
 
 export async function fetchTvSeries() {
   const result = await getTvSeries();
+  return result;
+}
+
+export async function fetchAllTitles() {
+  const result = await getAllTitles();
   return result;
 }
 
@@ -31,4 +38,9 @@ export async function fetchPreviousTitlesPage(cursor?: string) {
     result,
     previousCursor,
   };
+}
+
+export async function searchTitlesAction(query: string) {
+  const result = await searchTitles(query);
+  return result;
 }

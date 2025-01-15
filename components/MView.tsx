@@ -1,20 +1,48 @@
 "use client";
+import {
+  fetchNextTitlesPage,
+  fetchPreviousTitlesPage,
+  fetchTitlesByGenres,
+  fetchTvSeries,
+} from "@/actions/actions";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { MoView } from "./MoView";
-import { fetchTvSeries, fetchTitlesByGenres, fetchNextTitlesPage, fetchPreviousTitlesPage } from "@/actions/actions";
 import { useState } from "react";
+import { useItemContext } from "./ItemContext";
+import { MoView } from "./MoView";
 
 export default function MView({ result }: { result: any }) {
   const genres = [
-    "Action", "Adventure", "Animation", "Biography", "Comedy", "Crime", 
-    "Documentary", "Drama", "Family", "Fantasy", "Film-Noir", "Game-Show", 
-    "History", "Horror", "Music", "Musical", "Mystery", "News", "Reality-TV", 
-    "Romance", "Sci-Fi", "Short", "Sport", "Talk-Show", "Thriller", "War", 
-    "Western"
+    "Action",
+    "Adventure",
+    "Animation",
+    "Biography",
+    "Comedy",
+    "Crime",
+    "Documentary",
+    "Drama",
+    "Family",
+    "Fantasy",
+    "Film-Noir",
+    "Game-Show",
+    "History",
+    "Horror",
+    "Music",
+    "Musical",
+    "Mystery",
+    "News",
+    "Reality-TV",
+    "Romance",
+    "Sci-Fi",
+    "Short",
+    "Sport",
+    "Talk-Show",
+    "Thriller",
+    "War",
+    "Western",
   ];
-  const [items, setItems] = useState(result);
+  // const [items, setItems] = useState(result);
+  const { items, setItems } = useItemContext();
   const handleClick = async () => {
-
     const result = await fetchTvSeries();
     setItems(result);
   };
@@ -40,11 +68,11 @@ export default function MView({ result }: { result: any }) {
   return (
     <div className="mt-32">
       <section className="mb-16 px-4">
-        <div 
+        <div
           className="flex gap-2 pb-2 overflow-x-auto"
           style={{
-            scrollbarWidth: 'none', 
-            msOverflowStyle: 'none', 
+            scrollbarWidth: "none",
+            msOverflowStyle: "none",
           }}
           onMouseDown={(e) => {
             const container = e.currentTarget;
@@ -62,34 +90,28 @@ export default function MView({ result }: { result: any }) {
 
             const mouseUp = () => {
               isDown = false;
-              container.removeEventListener('mousemove', mouseMove);
-              container.removeEventListener('mouseup', mouseUp);
+              container.removeEventListener("mousemove", mouseMove);
+              container.removeEventListener("mouseup", mouseUp);
             };
 
-            container.addEventListener('mousemove', mouseMove);
-            container.addEventListener('mouseup', mouseUp);
+            container.addEventListener("mousemove", mouseMove);
+            container.addEventListener("mouseup", mouseUp);
           }}
         >
           <style jsx>{`
             .overflow-x-auto::-webkit-scrollbar {
-              display: none; 
+              display: none;
             }
           `}</style>
           {genres.map((genre, index) => (
             <button
               onClick={() => handleCategoryClick(genre)}
               key={index}
-              className="text-white/50 border border-white/50 rounded-lg p-2 px-4 whitespace-nowrap hover:bg-white/10 hover:text-white/70 transition-colors cursor-pointer"
+              className="text-white/50 border border-white/50 rounded-lg text-xl p-4 px-6 whitespace-nowrap hover:bg-white/10 hover:text-white/70 transition-colors cursor-pointer"
             >
               {genre}
             </button>
           ))}
-          <button
-            onClick={handleClick}
-            className="text-white/50 border border-white/50 rounded-lg p-2 px-4 whitespace-nowrap hover:bg-white/10 hover:text-white/70 transition-colors cursor-pointer"
-          >
-            TV Series
-          </button>
         </div>
       </section>
 
@@ -98,18 +120,18 @@ export default function MView({ result }: { result: any }) {
       </section>
 
       <section className="flex justify-center mt-12">
-        <div className="flex gap-2">
+        <div className="flex gap-2 backdrop-blur-sm bg-white/10 p-2 border border-white/10 rounded-2xl">
           <button
             onClick={() => handlePreviousPage(cursor)}
-            className="bg-white rounded-lg p-2"
+            className="p-2 hover:bg-white/20 rounded-lg transition-colors"
           >
-            <ChevronLeft color="black" />
+            <ChevronLeft className="text-white" />
           </button>
           <button
             onClick={() => handleNextPage(cursor)}
-            className="bg-white rounded-lg p-2"
+            className="p-2 hover:bg-white/20 rounded-lg transition-colors"
           >
-            <ChevronRight color="black" />
+            <ChevronRight className="text-white" />
           </button>
         </div>
       </section>

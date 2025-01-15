@@ -1,14 +1,4 @@
-import {
-  asc,
-  count,
-  lt,
-  eq,
-  getTableColumns,
-  gt,
-  sql,
-  desc,
-  like,
-} from "drizzle-orm";
+import { asc, desc, eq, gt, like, lt } from "drizzle-orm";
 import { db } from "../db";
 import { mntTable } from "../schema";
 
@@ -31,7 +21,7 @@ export const getAllTitles = async () => {
   const result = await db
     .select()
     .from(mntTable)
-    .orderBy(desc(mntTable.id))
+    .orderBy(asc(mntTable.id))
     .limit(10);
   return result;
 };
@@ -56,7 +46,6 @@ export const NextTitlesPage = async (cursor?: string, pageSize = 10) => {
 
   const nextCursor =
     result.length > 0 ? result[result.length - 1].id : undefined;
-  console.log(nextCursor);
   return {
     result,
     nextCursor,
@@ -69,11 +58,20 @@ export const PreviousTitlesPage = async (cursor?: string, pageSize = 10) => {
     .from(mntTable)
     .where(cursor ? lt(mntTable.id, cursor) : undefined)
     .limit(pageSize)
-    .orderBy(desc(mntTable.id));
+    .orderBy(asc(mntTable.id));
 
   const previousCursor = result.length > 0 ? result[0].id : undefined;
   return {
     result,
     previousCursor,
   };
+};
+
+export const searchTitles = async (query: string) => {
+  const result = await db
+    .select()
+    .from(mntTable)
+    .where(like(mntTable.title, `%${query}%`))
+    .limit(10);
+  return result;
 };

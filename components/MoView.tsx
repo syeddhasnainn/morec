@@ -1,7 +1,6 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
 import { useViewContext } from "./ViewContext";
 
 export const MoView = ({ result }: { result: any }) => {
@@ -16,14 +15,16 @@ export const MoView = ({ result }: { result: any }) => {
               <Link href={`/${row.id}`} key={row.id} prefetch={true}>
                 <div
                   key={row.id}
-                  className="rounded-lg overflow-hidden group cursor-pointer "
+                  className="rounded-lg overflow-clip group cursor-pointer "
                 >
                   <Image
+                    priority={true}
+                    quality={50}
                     src={row.image}
                     alt={row.title}
                     width={400}
                     height={500}
-                    className="w-full h-auto object-cover hover:scale-110 transition-all duration-500 mb-1"
+                    className="w-full h-auto object-cover hover:scale-105 transition-all duration-500 mb-1"
                   />
                 </div>
               </Link>
@@ -41,6 +42,8 @@ export const MoView = ({ result }: { result: any }) => {
                 <div className="flex gap-4 items-center">
                   <div className="w-16 h-24 sm:w-32 sm:h-32 bg-white/20 rounded-lg overflow-hidden flex-shrink-0">
                     <Image
+                      priority={true}
+                      quality={50}
                       src={row.image}
                       alt={row.title}
                       width={80}
@@ -49,7 +52,7 @@ export const MoView = ({ result }: { result: any }) => {
                     />
                   </div>
                   <div className="flex flex-col gap-2">
-                    <div className="text-gray-500 text-sm">Title</div>
+                    <div className="text-gray-500 text-lg font-medium">TITLE</div>
                     <div className="text-base sm:text-lg">{row.title}</div>
                   </div>
                 </div>
