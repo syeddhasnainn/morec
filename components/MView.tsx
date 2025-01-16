@@ -9,8 +9,15 @@ import {
 } from "@/actions/actions";
 import { useState } from "react";
 import { useItemContext } from "./ItemContext";
+import { useRouter } from "next/navigation";
 
-export default function MView({ result }: { result: any }) {
+export default function MView({
+  result,
+  cursor,
+}: {
+  result: any;
+  cursor: any;
+}) {
   const genres = [
     "Action",
     "Adventure",
@@ -40,28 +47,25 @@ export default function MView({ result }: { result: any }) {
     "War",
     "Western",
   ];
-  // const [items, setItems] = useState(result);
   const { items, setItems } = useItemContext();
-  const handleClick = async () => {
-    const result = await fetchTvSeries();
-    setItems(result);
-  };
 
-  const [cursor, setCursor] = useState<string | undefined>("10");
-  console.log("cursor", cursor);
+  const router = useRouter();
+
+  // const [CurrentCursor, setCurrentCursor] = useState<string | undefined>(
+  //   cursor
+  // );
+  // console.log("cursor", cursor);
 
   const handleNextPage = async (cursor: string | undefined) => {
     const { result, nextCursor } = await fetchNextTitlesPage(cursor);
-    console.log("nextCursor", result);
     setItems(result);
-    setCursor(nextCursor);
+    router.push(`/?cursor=${nextCursor}`);
   };
 
   const handlePreviousPage = async (cursor: string | undefined) => {
     const { result, previousCursor } = await fetchPreviousTitlesPage(cursor);
-    console.log("previousCursor", result);
     setItems(result);
-    setCursor(previousCursor);
+    router.push(`/?cursor=${previousCursor}`);
   };
 
   const handleCategoryClick = async (genre: string) => {
